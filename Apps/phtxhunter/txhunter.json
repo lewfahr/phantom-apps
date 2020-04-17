@@ -1,0 +1,1071 @@
+{
+	"product_version_regex": ".*",
+	"python_version": "2.7",
+	"package_name": "phantom_txhunter",
+	"actions": [{
+		"read_only": true,
+		"description": "Validate the asset configuration for connectivity using supplied configuration",
+		"parameters": {},
+		"versions": "EQ(*)",
+		"action": "test connectivity",
+		"output": [],
+		"identifier": "test_connectivity",
+		"type": "test",
+		"verbose": ""
+	}, {
+		"read_only": true,
+		"description": "Get TXHunter version number",
+		"render": {
+			"width": 6,
+			"title": "Version Info",
+			"type": "table",
+			"height": 2
+		},
+		"versions": "EQ(*)",
+		"parameters": {},
+		"action": "get version",
+		"output": [{
+			"column_name": "status",
+			"data_path": "action_result.status",
+			"data_type": "string",
+			"column_order": 0
+		}, {
+			"data_path": "action_result.data.*.version",
+			"data_type": "string",
+			"contains": ["ip"],
+			"column_order": 1,
+			"column_name": "version"
+		}, {
+			"data_path": "action_result.data.*.success",
+			"data_type": "boolean"
+		}, {
+			"data_path": "action_result.message",
+			"data_type": "string"
+		}, {
+			"data_path": "summary.total_objects",
+			"data_type": "numeric"
+		}, {
+			"data_path": "summary.total_objects_successful",
+			"data_type": "numeric"
+		}],
+		"identifier": "get_version",
+		"type": "generic",
+		"verbose": "Get TXHunter version number"
+	}, {
+		"read_only": false,
+		"description": "Make forensic investigation on endpoints",
+		"render": {
+			"width": 6,
+			"title": "Forensic Investigation Results",
+			"type": "table",
+			"height": 2
+		},
+		"versions": "EQ(*)",
+		"parameters": {
+			"username": {
+				"required": false,
+				"description": "Username",
+				"data_type": "string",
+				"order": 3
+			},
+			"domain": {
+				"required": false,
+				"description": "Domain",
+				"data_type": "string",
+				"order": 6
+			},
+			"ip_hostname": {
+				"required": true,
+				"description": "ip to make forensic investigation on",
+				"data_type": "string",
+				"contains": ["ip"],
+				"primary": true,
+				"order": 0
+			},
+			"default_port": {
+				"default": 5985,
+				"required": false,
+				"description": "Default port for Windows Remote Manager",
+				"data_type": "numeric",
+				"order": 1
+			},
+			"default_protocol": {
+				"description": "Default protocol for Windows Remote Manager",
+				"data_type": "string",
+				"default": "http",
+				"required": false,
+				"value_list": ["http", "https"],
+				"order": 2
+			},
+			"password": {
+				"required": false,
+				"description": "Password",
+				"data_type": "string",
+				"order": 4
+			},
+			"transport": {
+				"description": "Type of transport to use for Windows Remote Manager",
+				"data_type": "string",
+				"value_list": ["basic", "ntlm"],
+				"required": true,
+				"default": "basic",
+				"order": 5
+			}
+		},
+		"action": "forensic investigation",
+		"output": [{
+			"column_name": "status",
+			"data_path": "action_result.status",
+			"data_type": "string",
+			"column_order": 0
+		}, {
+			"column_order": 9,
+			"data_path": "action_result.data.*.Endpoint.Investigate Org",
+			"data_type": "string",
+			"column_name": "Investigate Org"
+		}, {
+			"data_path": "action_result.data.*.Endpoint.IP4 Address",
+			"data_type": "string",
+			"contains": ["ip"],
+			"column_order": 6,
+			"column_name": "IP4 Address"
+		}, {
+			"data_path": "action_result.data.*.Endpoint.MAC Address",
+			"data_type": "string"
+		}, {
+			"column_order": 4,
+			"data_path": "action_result.data.*.Endpoint.OS Name",
+			"data_type": "string",
+			"column_name": "OS Name"
+		}, {
+			"data_path": "action_result.data.*.Endpoint.Investigate Version",
+			"data_type": "string",
+			"contains": ["ip"],
+			"column_order": 10,
+			"column_name": "Investigate Version"
+		}, {
+			"column_order": 3,
+			"data_path": "action_result.data.*.Endpoint.User Name",
+			"data_type": "string",
+			"column_name": "User Name"
+		}, {
+			"column_order": 8,
+			"data_path": "action_result.data.*.Endpoint.Investigate Time",
+			"data_type": "string",
+			"column_name": "Investigate Time"
+		}, {
+			"column_order": 7,
+			"data_path": "action_result.data.*.Endpoint.Investigate User",
+			"data_type": "string",
+			"column_name": "Investigate User"
+		}, {
+			"data_path": "action_result.data.*.Endpoint.OS Version",
+			"data_type": "string"
+		}, {
+			"column_order": 5,
+			"data_path": "action_result.data.*.Endpoint.Host Name",
+			"data_type": "string",
+			"column_name": "Host Name"
+		}, {
+			"data_path": "action_result.data.*.IsNewVersion",
+			"data_type": "boolean"
+		}, {
+			"data_path": "action_result.data.*.Network.Network Connection.*.LocalPort",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.data.*.Network.Network Connection.*.LocalIP",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Network.Network Connection.*.PID",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network Connection.*.DestPort",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.data.*.Network.Network Connection.*.DestIP",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network Connection.*.State",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network Connection.*.CreateTime",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.category",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.rand",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.severity",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.country",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.longitude",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.ip",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.latitude",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.dest.port",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.src.ip",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.src.state",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.src.port",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.process.processid",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.process.publisher",
+			"data_type": "string"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.process.processname",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.process.infected",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.process.createtime",
+			"data_type": "string"
+		}, {
+			"contains": ["md5"],
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.process.md5",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network.*.MACaddress",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network.*.LogonServer",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network.*.IP6address",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network.*.IsEnabled",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.data.*.Network.Network.*.IP4address",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network.*.ConnectionName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network.*.NetworkCards",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network.*.DHCPEnabled",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.title",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.Status",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.Publisher",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.PageFileUsage",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.PageFaults",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.QuotaPagedPoolUsage",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Details.*.ProcessId",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.QuotaPeakPagedPoolUsage",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.QuotaNonPagedPoolUsage",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Details.*.CommandLine",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Details.*.ProcessPath",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.HandleCount",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.SessionId",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.Authority",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.Priority",
+			"data_type": "string"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Details.*.ProcessName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.QuotaPeakNonPagedPoolUsage",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.ThreadCount",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Details.*.ParentProcessId",
+			"data_type": "string"
+		}, {
+			"contains": ["md5"],
+			"data_path": "action_result.data.*.Process.Process Details.*.MD5",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.CreateTime",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Details.*.Description",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.parent_pid",
+			"data_type": "numeric"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.name",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.pid",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.auth",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.reputation",
+			"data_type": "numeric"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.path",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.desc",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.parent_pid",
+			"data_type": "numeric"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.name",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.pid",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.auth",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.reputation",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.signer",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.path",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.desc",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.signer",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.parent_pid",
+			"data_type": "numeric"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.name",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.pid",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.auth",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.reputation",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.parent_pid",
+			"data_type": "numeric"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.name",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.pid",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.auth",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.reputation",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.signer",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.path",
+			"data_type": "string"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.desc",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.signer",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.path",
+			"data_type": "string"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.desc",
+			"data_type": "string"
+		}, {
+			"contains": ["md5"],
+			"data_path": "action_result.data.*.File.Prefetches.*.MD5",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.File.Prefetches.*.LastRunTime/ModifyTime",
+			"data_type": "string"
+		}, {
+			"contains": ["file path"],
+			"data_path": "action_result.data.*.File.Prefetches.*.FilePath",
+			"data_type": "string"
+		}, {
+			"column_order": 1,
+			"data_path": "action_result.data.*.Final Result",
+			"data_type": "string",
+			"column_name": "Final Result"
+		}, {
+			"contains": ["user name"],
+			"data_path": "action_result.data.*.System.System Information.UserName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.MACaddress",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.Uptime",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.Processors",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.OSConfiguration",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.VideoDriver",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.TotalVirtualMemory",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.AvailablePhysicalMemroy",
+			"data_type": "string"
+		}, {
+			"contains": ["file path"],
+			"data_path": "action_result.data.*.System.System Information.WindowsDirectory",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ProcessorCount",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.OSManufacturer",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.data.*.System.System Information.IP4address",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ProductType",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.TimeZone",
+			"data_type": "string"
+		}, {
+			"contains": ["file path"],
+			"data_path": "action_result.data.*.System.System Information.SystemDirectory",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.Hotfixs",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.SystemManufacturer",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.InputLocale",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.NetworkCards",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.KernelBuildNum",
+			"data_type": "string"
+		}, {
+			"contains": ["host name"],
+			"data_path": "action_result.data.*.System.System Information.HostName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.OSBuildType",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ProcessorType",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.HardwareAbstractionLayerVersion",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.Lastlogin",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.OSDescription",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.IP6address",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.DHCPEnabled",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.Lastboot",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ServicePack",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.Processor",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.OSname",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.BIOSVersionDate",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.RegisteredOwner",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.RegisteredOrganization",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ProductVersion",
+			"data_type": "string"
+		}, {
+			"contains": ["file path"],
+			"data_path": "action_result.data.*.System.System Information.SystemRoot",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.PageFileSpace",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.OSVersion",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.InstalledPhysicalMemory",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.SystemLocale",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.Browser",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.KernelVersion",
+			"data_type": "string"
+		}, {
+			"contains": ["domain"],
+			"data_path": "action_result.data.*.System.System Information.Domain",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.LogonServer",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.PhysicalMemory",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.SystemType",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.VirtualMemoryAvailable",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.VirtualMemoryMaxSize",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ProcessorSpeed",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.OriginalInstallDate",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ConnectionName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.SystemModel",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.System.System Information.PageFile",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.VirtualMemoryInUse",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.BootDevice",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.System Information.ProductID",
+			"data_type": "string"
+		}, {
+			"contains": ["file path"],
+			"data_path": "action_result.data.*.System.Disk Space Information.*.Path",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Disk Space Information.*.UsedSpace",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Disk Space Information.*.TotalSpace",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Disk Space Information.*.FreeSpace",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.Status",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.Comment",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.PasswordExpireTime",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.PasswordNeed",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.PasswordChange",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.AccountName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.LastLogon",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.UserComment",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.UserSid",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.FullName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.System.Users.*.UserExpireTime",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Summary.*.workload",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Summary.*.description",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Summary.*.classification",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Summary.*.title",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Summary.*.instruction",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Summary.*.datetime",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Summary.*.severity",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Rate",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Warnings.*.Title",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Warnings.*.workload",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Warnings.*.instruction",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Warnings.*.severity",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Warnings.*.Detail",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Autorun.*.Profile",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Autorun.*.Category",
+			"data_type": "string"
+		}, {
+			"contains": ["sha1"],
+			"data_path": "action_result.data.*.Autorun.*.SHA1",
+			"data_type": "string"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Autorun.*.Description",
+			"data_type": "string"
+		}, {
+			"contains": ["file path"],
+			"data_path": "action_result.data.*.Autorun.*.RegistryKey",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Autorun.*.RegistryValue",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Autorun.*.Publisher",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Autorun.*.Enablement",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Autorun.*.DateTime",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Autorun.*.Cmdline",
+			"data_type": "string"
+		}, {
+			"contains": ["md5"],
+			"data_path": "action_result.data.*.Autorun.*.MD5",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.data.*.Autorun.*.Version",
+			"data_type": "string"
+		}, {
+			"contains": ["sha256"],
+			"data_path": "action_result.data.*.Autorun.*.SHA256",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Autorun.*.ImagePath",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Autorun.*.reputation",
+			"data_type": "numeric"
+		}, {
+			"column_order": 2,
+			"data_path": "action_result.data.*.System Critical Level(SCL)",
+			"data_type": "string",
+			"column_name": "System Critical Level(SCL)"
+		}, {
+			"data_path": "action_result.data.*.Severity",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.HookAddr",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.ProcessID",
+			"data_type": "string"
+		}, {
+			"contains": ["sha1"],
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.SHA1",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.iMod",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.Publisher",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.ProcessPath",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.MessageType",
+			"data_type": "string"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.ProcessName",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.HookFlag",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.ThreadID",
+			"data_type": "string"
+		}, {
+			"contains": ["sha256"],
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.SHA256",
+			"data_type": "string"
+		}, {
+			"contains": ["md5"],
+			"data_path": "action_result.data.*.KernelInfo.MessageHook.*.MD5",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.KernelInfo.MBR",
+			"data_type": "string"
+		}, {
+			"column_order": 11,
+			"data_path": "action_result.data.*.Conclusion",
+			"data_type": "string",
+			"column_name": "Conclusion"
+		}, {
+			"data_path": "action_result.message",
+			"data_type": "string"
+		}, {
+			"data_path": "summary.total_objects",
+			"data_type": "numeric"
+		}, {
+			"data_path": "summary.total_objects_successful",
+			"data_type": "numeric"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.parameter.ip",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.Investigate Org",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.summary.Endpoint.IP4 Address",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.MAC Address",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.OS Name",
+			"data_type": "string"
+		}, {
+			"contains": ["ip"],
+			"data_path": "action_result.summary.Endpoint.Investigate Version",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.User Name",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.Investigate Time",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.Investigate User",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.OS Version",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Endpoint.Host Name",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Severity",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.title",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Final Result",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Rate",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.System Critical Level(SCL)",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.summary.Conclusion",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Endpoint.EndpointId",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.src.longitude",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.src.country",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Network.Network remote connection of processes.*.src.latitude",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.parent_pid",
+			"data_type": "numeric"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.name",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.pid",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.auth",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.reputation",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.signer",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.path",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.desc",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.parent_pid",
+			"data_type": "numeric"
+		}, {
+			"contains": ["file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.name",
+			"data_type": "string"
+		}, {
+			"contains": ["pid"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.pid",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.auth",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.reputation",
+			"data_type": "numeric"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.signer",
+			"data_type": "string"
+		}, {
+			"contains": ["file path", "file name"],
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.path",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.data.*.Process.Process Relationship Map.*.child.*.child.*.child.*.child.*.child.*.desc",
+			"data_type": "string"
+		}, {
+			"contains": ["user name"],
+			"data_path": "action_result.parameter.username",
+			"data_type": "string"
+		}, {
+			"contains": ["ip", "host name"],
+			"data_path": "action_result.parameter.ip_hostname",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.parameter.default_port",
+			"data_type": "numeric"
+		}, {
+			"contains": ["url"],
+			"data_path": "action_result.parameter.default_protocol",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.parameter.password",
+			"data_type": "string"
+		}, {
+			"data_path": "action_result.parameter.transport",
+			"data_type": "string"
+		}],
+		"identifier": "forensic_investigation",
+		"type": "generic",
+		"verbose": "Make forensic investigation on endpoints"
+	}],
+	"disabled": false,
+	"logo": "txhunter.png",
+	"logo_dark": "txhunter_dark.png",
+	"executable": "spawn",
+	"appname": "-",
+	"version": 1,
+	"app_version": "1.0.0",
+	"type": "endpoint",
+	"product_name": "TXHunter",
+	"description": "TXHunter provides an easy and convenient tool for conducting endpoint threat incident investigations remotely.",
+	"utctime_updated": "2020-04-06T18:25:26.572309Z",
+	"configuration": {
+		"org": {
+			"description": "Organization",
+			"data_type": "string",
+			"value_list": [],
+			"required": true,
+			"default": "",
+			"order": 3
+		},
+		"apikey": {
+			"description": "APIKey",
+			"data_type": "string",
+			"value_list": [],
+			"required": true,
+			"default": "",
+			"order": 1
+		},
+		"base_url": {
+			"description": "URL",
+			"data_type": "string",
+			"value_list": [],
+			"required": true,
+			"default": "",
+			"order": 0
+		},
+		"user": {
+			"description": "User",
+			"data_type": "string",
+			"value_list": [],
+			"required": true,
+			"default": "",
+			"order": 2
+		}
+	},
+	"product_vendor": "TriagingX",
+	"pip_dependencies": {
+		"wheel": [{
+			"module": "pywinrm",
+			"input_file": "wheels/pywinrm-0.3.0-py2.py3-none-any.whl"
+		}, {
+			"module": "requests_ntlm",
+			"input_file": "wheels/requests_ntlm-1.1.0-py2.py3-none-any.whl"
+		}, {
+			"module": "ntlm_auth",
+			"input_file": "wheels/ntlm_auth-1.2.0-py2.py3-none-any.whl"
+		}]
+	},
+	"publisher": "TriagingX",
+	"name": "TXHunter",
+	"license": "Copyright (c) TriagingX, 2020",
+	"appid": "7a868172-3092-4c51-9f45-705d174f5706",
+	"directory": "txhunter_7a868172-3092-4c51-9f45-705d174f5706",
+	"app_wizard_version": "1.0.0",
+	"min_phantom_version": "4.8.23319",
+	"main_module": "txhunter_connector.py"
+}
